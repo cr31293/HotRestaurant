@@ -28,11 +28,11 @@ app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "home.html"));
 });
 
-app.get("/add", function(req, res) {
+app.get("/table", function(req, res) {
     res.sendFile(path.join(__dirname, "table.html"));
 });
 
-app.get("/add", function(req, res) {
+app.get("/reserve", function(req, res) {
     res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
@@ -40,30 +40,25 @@ app.get("/api/tables", function(req, res) {
 return res.json(tables);
 });  
 
-app.post("/api/tables", function(req, res) {
-    var newTable = req.body;
-  
-    console.log(newTable);
-  
-    tables.push(newTable);
-  
-    res.json(newTable);
-});
-
 app.get("/api/waitingList", function(req, res) {
     return res.json(waitingList);
 });
 
 
-app.post("/api/waitingList", function(req, res) {
-    var newWaiting = req.body;
-
-    console.log(newWaiting);
-
-    waitingList.push(newWaiting);
-
-    res.json(newWaiting);
+app.post("/api/tables", function(req, res) {
+    var newTable = req.body;
+    
+    console.log(newTable);
+    
+    if (tables.length <= 5){
+        tables.push(newTable);
+    
+    }else{
+        waitingList.push(newTable);
+    }
+    res.json(newTable);
 });
+
 
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
