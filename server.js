@@ -50,6 +50,52 @@ app.post("/api/tables", function(req, res) {
     res.json(newTable);
   });
 
+app.get("/api/tables", function(req, res) {
+return res.json(tables);
+});  
+
+app.get("/api/tables/:tableID", function(req, res) {
+    var chosen = req.params.tableID;
+  
+    console.log(chosen);
+  
+    for (var i = 0; i < Tables.length; i++) {
+      if (chosen === Tables[i].routeName) {
+        return res.json(Tables[i]);
+      }
+    }
+  
+    return res.json(false);
+});
+
+app.post("/api/tables", function(req, res) {
+    var newTable = req.body;
+  
+    newTable.routeName = newTable.name.replace(/\s+/g, "").toLowerCase();
+  
+    console.log(newTable);
+  
+    Tables.push(newTable);
+  
+    res.json(newTable);
+});
+
+
+app.get("/api/waitingList", function(req, res) {
+    return res.json(waitingList);
+});
+
+
+app.post("/api/waitingList", function(req, res) {
+    var newWaiting = req.body;
+
+    console.log(newWaiting);
+
+    waitingList.push(newWaiting);
+
+    res.json(newWaiting);
+});
+
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
 });
