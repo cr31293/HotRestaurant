@@ -9,7 +9,6 @@ app.use(express.json());
 
 const tables = [
     {
-        routeName: 'jackjohnson',
         name: 'Jack Johnson',
         phone: 9999999999,
         email: 'ha@no.com',
@@ -18,7 +17,6 @@ const tables = [
 ];
 const waitingList = [
     {
-        routeName: 'jackjohnson',
         name: 'Jack Johnson',
         phone: 9999999999,
         email: 'ha@no.com',
@@ -27,39 +25,27 @@ const waitingList = [
 ];
 
 app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "view.html"));
+    res.sendFile(path.join(__dirname, "home.html"));
 });
 
 app.get("/add", function(req, res) {
-    res.sendFile(path.join(__dirname, "add.html"));
+    res.sendFile(path.join(__dirname, "table.html"));
+});
+
+app.get("/add", function(req, res) {
+    res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
 app.get("/api/tables", function(req, res) {
 return res.json(tables);
 });  
 
-app.get("/api/tables/:tableID", function(req, res) {
-    var chosen = req.params.tableID;
-  
-    console.log(chosen);
-  
-    for (var i = 0; i < Tables.length; i++) {
-      if (chosen === Tables[i].routeName) {
-        return res.json(Tables[i]);
-      }
-    }
-  
-    return res.json(false);
-});
-
 app.post("/api/tables", function(req, res) {
     var newTable = req.body;
   
-    newTable.routeName = newTable.name.replace(/\s+/g, "").toLowerCase();
-  
     console.log(newTable);
   
-    Tables.push(newTable);
+    tables.push(newTable);
   
     res.json(newTable);
   });
